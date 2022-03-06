@@ -1,0 +1,2446 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/5/2022 8:09:32 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="LAPTOP-7SOBDR0K"
+  DTS:CreatorName="LAPTOP-7SOBDR0K\chait"
+  DTS:DTSID="{D00E147A-46DA-42BD-9FA8-002BE30BBCAE}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.180"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{1582F5A8-18FD-485C-8EC4-A7006C01570E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{F2DBF996-4143-42A7-A6DD-74BC4A97E681}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\chait\Downloads\InterviewData.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.Vaultex_Org]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9EF96341-D8F5-475D-929C-C36C95313B8D}"
+      DTS:ObjectName="localhost.Vaultex_Org">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=Vaultex_Org;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Employee Load"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{EAC19BF8-837E-4B43-A092-E3F1762911EB}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Employee Load"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Employee Load\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Employee Load\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Employee Load\Data Conversion.Inputs[Data Conversion Input].Columns[OrganisationNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="OrganisationNumber"
+                      lineageId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].Columns[OrganisationNumber]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Employee Load\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Employee Load\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Employee Load\Data Conversion.Outputs[Data Conversion Output].Columns[DC_OrganisationNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Employee Load\Data Conversion.Outputs[Data Conversion Output].Columns[DC_OrganisationNumber]"
+                      name="DC_OrganisationNumber"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Employee Load\Excel Source.Outputs[Excel Source Output].Columns[OrganisationNumber]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Employee Load\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Employee Load\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Employee Load\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Employee Load\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Employee Load\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Employee Load\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Employee Load\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Employee$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Employee Load\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Employee Load\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].Columns[OrganisationNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[OrganisationNumber]"
+                      length="255"
+                      lineageId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].Columns[OrganisationNumber]"
+                      name="OrganisationNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].Columns[FirstName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[FirstName]"
+                      length="255"
+                      lineageId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].Columns[FirstName]"
+                      name="FirstName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].Columns[LastName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[LastName]"
+                      length="255"
+                      lineageId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].Columns[LastName]"
+                      name="LastName"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[OrganisationNumber]"
+                      dataType="wstr"
+                      length="255"
+                      name="OrganisationNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[FirstName]"
+                      dataType="wstr"
+                      length="255"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[LastName]"
+                      dataType="wstr"
+                      length="255"
+                      name="LastName" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Employee Load\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Employee Load\Excel Source.Outputs[Excel Source Error Output].Columns[OrganisationNumber]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Employee Load\Excel Source.Outputs[Excel Source Error Output].Columns[OrganisationNumber]"
+                      name="OrganisationNumber" />
+                    <outputColumn
+                      refId="Package\Employee Load\Excel Source.Outputs[Excel Source Error Output].Columns[FirstName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Employee Load\Excel Source.Outputs[Excel Source Error Output].Columns[FirstName]"
+                      name="FirstName" />
+                    <outputColumn
+                      refId="Package\Employee Load\Excel Source.Outputs[Excel Source Error Output].Columns[LastName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Employee Load\Excel Source.Outputs[Excel Source Error Output].Columns[LastName]"
+                      name="LastName" />
+                    <outputColumn
+                      refId="Package\Employee Load\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Employee Load\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Employee Load\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Employee Load\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Employee Load\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Employee]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Employee Load\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Vaultex_Org]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Vaultex_Org]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Employee Load\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Employee Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FirstName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="FirstName"
+                      externalMetadataColumnId="Package\Employee Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                      lineageId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].Columns[FirstName]" />
+                    <inputColumn
+                      refId="Package\Employee Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LastName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="LastName"
+                      externalMetadataColumnId="Package\Employee Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                      lineageId="Package\Employee Load\Excel Source.Outputs[Excel Source Output].Columns[LastName]" />
+                    <inputColumn
+                      refId="Package\Employee Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DC_OrganisationNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="DC_OrganisationNumber"
+                      externalMetadataColumnId="Package\Employee Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrganisationNumber]"
+                      lineageId="Package\Employee Load\Data Conversion.Outputs[Data Conversion Output].Columns[DC_OrganisationNumber]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Employee Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[EmployeeId]"
+                      dataType="i4"
+                      name="EmployeeId" />
+                    <externalMetadataColumn
+                      refId="Package\Employee Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                      dataType="wstr"
+                      length="255"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Employee Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                      dataType="wstr"
+                      length="255"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\Employee Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrganisationNumber]"
+                      dataType="wstr"
+                      length="50"
+                      name="OrganisationNumber" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Employee Load\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Employee Load\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Employee Load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Employee Load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Employee Load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Employee Load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Employee Load.Paths[Data Conversion Output]"
+              endId="Package\Employee Load\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\Employee Load\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Employee Load.Paths[Excel Source Output]"
+              endId="Package\Employee Load\Data Conversion.Inputs[Data Conversion Input]"
+              name="Excel Source Output"
+              startId="Package\Employee Load\Excel Source.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Organisation Load"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{09436112-F8BC-40D3-9E69-3D052CEBB3D4}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Organisation Load">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Organisation Load\Aggregate"
+              componentClassID="Microsoft.Aggregate"
+              contactInfo="Aggregate;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Aggregates data with functions such as Average, Sum, Count, Max, and Min. For example, group data to compute the sum of sales per product or the average visits per day."
+              name="Aggregate"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                  name="KeyScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                  name="Keys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of distinct values in a column that the aggregation counts distinctly. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no CountDistinctScale value is used."
+                  name="CountDistinctScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of distinct values in a column that the aggregation counts distinctly. If a CountDistinctScale value is specified, the value in CountDistinctKeys takes precedence."
+                  name="CountDistinctKeys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage by which memory can be extended during the aggregation. Valid values are between 1 and 100."
+                  name="AutoExtendFactor">25</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Organisation Load\Aggregate.Inputs[Aggregate Input 1]"
+                  name="Aggregate Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Organisation Load\Aggregate.Inputs[Aggregate Input 1].Columns[OrganisationNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="OrganisationNumber"
+                      lineageId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output].Columns[OrganisationNumber]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Organisation Load\Aggregate.Outputs[Aggregate Output 1]"
+                  name="Aggregate Output 1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                      name="KeyScale"
+                      typeConverter="KeyScaleType">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                      name="Keys" />
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Organisation Load\Aggregate.Outputs[Aggregate Output 1].Columns[Count all]"
+                      dataType="ui8"
+                      lineageId="Package\Organisation Load\Aggregate.Outputs[Aggregate Output 1].Columns[Count all]"
+                      name="Count all">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Organisation Load\0:invalid}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">2</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Aggregate.Outputs[Aggregate Output 1].Columns[OrganisationNumber]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Aggregate.Outputs[Aggregate Output 1].Columns[OrganisationNumber]"
+                      name="OrganisationNumber">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output].Columns[OrganisationNumber]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Organisation Load\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Organisation Load\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Organisation Load\Data Conversion.Inputs[Data Conversion Input].Columns[Postcode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Postcode"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[Postcode]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Organisation Load\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Organisation Load\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Organisation Load\Data Conversion.Outputs[Data Conversion Output].Columns[DC_Postcode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="20"
+                      lineageId="Package\Organisation Load\Data Conversion.Outputs[Data Conversion Output].Columns[DC_Postcode]"
+                      name="DC_Postcode"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[Postcode]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Organisation Load\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Organisation Load\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Organisation Load\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Organisation Load\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Organisation Load\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Organisation Load\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Organisation$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Organisation Load\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[OrganisationName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[OrganisationName]"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[OrganisationName]"
+                      name="OrganisationName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[OrganisationNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[OrganisationNumber]"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[OrganisationNumber]"
+                      name="OrganisationNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[AddressLine1]"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine1]"
+                      name="AddressLine1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[AddressLine2]"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine2]"
+                      name="AddressLine2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine3]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[AddressLine3]"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine3]"
+                      name="AddressLine3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine4]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[AddressLine4]"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine4]"
+                      name="AddressLine4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[Town]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Town]"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[Town]"
+                      name="Town"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[Postcode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Postcode]"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[Postcode]"
+                      name="Postcode"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[OrganisationName]"
+                      dataType="wstr"
+                      length="255"
+                      name="OrganisationName" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[OrganisationNumber]"
+                      dataType="wstr"
+                      length="255"
+                      name="OrganisationNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[AddressLine1]"
+                      dataType="wstr"
+                      length="255"
+                      name="AddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[AddressLine2]"
+                      dataType="wstr"
+                      length="255"
+                      name="AddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[AddressLine3]"
+                      dataType="wstr"
+                      length="255"
+                      name="AddressLine3" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[AddressLine4]"
+                      dataType="wstr"
+                      length="255"
+                      name="AddressLine4" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Town]"
+                      dataType="wstr"
+                      length="255"
+                      name="Town" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].ExternalColumns[Postcode]"
+                      dataType="wstr"
+                      length="255"
+                      name="Postcode" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[OrganisationName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[OrganisationName]"
+                      name="OrganisationName" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[OrganisationNumber]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[OrganisationNumber]"
+                      name="OrganisationNumber" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[AddressLine1]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[AddressLine1]"
+                      name="AddressLine1" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[AddressLine2]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[AddressLine2]"
+                      name="AddressLine2" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[AddressLine3]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[AddressLine3]"
+                      name="AddressLine3" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[AddressLine4]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[AddressLine4]"
+                      name="AddressLine4" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[Town]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[Town]"
+                      name="Town" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[Postcode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[Postcode]"
+                      name="Postcode" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Organisation Load\Excel Source 1"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source 1"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Employee$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Organisation Load\Excel Source 1.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output].Columns[OrganisationNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output].ExternalColumns[OrganisationNumber]"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output].Columns[OrganisationNumber]"
+                      name="OrganisationNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output].Columns[FirstName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output].ExternalColumns[FirstName]"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output].Columns[FirstName]"
+                      name="FirstName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output].Columns[LastName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output].ExternalColumns[LastName]"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output].Columns[LastName]"
+                      name="LastName"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output].ExternalColumns[OrganisationNumber]"
+                      dataType="wstr"
+                      length="255"
+                      name="OrganisationNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output].ExternalColumns[FirstName]"
+                      dataType="wstr"
+                      length="255"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output].ExternalColumns[LastName]"
+                      dataType="wstr"
+                      length="255"
+                      name="LastName" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Error Output].Columns[OrganisationNumber]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Error Output].Columns[OrganisationNumber]"
+                      name="OrganisationNumber" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Error Output].Columns[FirstName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Error Output].Columns[FirstName]"
+                      name="FirstName" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Error Output].Columns[LastName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Error Output].Columns[LastName]"
+                      name="LastName" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Organisation Load\Merge Join"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[OrganisationNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="OrganisationNumber"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[OrganisationNumber]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[AddressLine1]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="AddressLine1"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[AddressLine1]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[AddressLine2]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="AddressLine2"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[AddressLine2]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[AddressLine3]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="AddressLine3"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[AddressLine3]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[AddressLine4]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="AddressLine4"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[AddressLine4]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[Town]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Town"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[Town]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[DC_Postcode]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="DC_Postcode"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[DC_Postcode]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[OrganisationName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="OrganisationName"
+                      cachedSortKeyPosition="2"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[OrganisationName]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Organisation Load\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Organisation Load\Merge Join.Inputs[Merge Join Right Input].Columns[OrganisationNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="OrganisationNumber"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Organisation Load\Sort 1.Outputs[Sort Output].Columns[OrganisationNumber]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\Merge Join.Inputs[Merge Join Right Input].Columns[Count all]"
+                      cachedDataType="ui8"
+                      cachedName="Count all"
+                      cachedSortKeyPosition="2"
+                      lineageId="Package\Organisation Load\Sort 1.Outputs[Sort Output].Columns[Count all]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[Count all]"
+                      dataType="ui8"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[Count all]"
+                      name="Count all">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Organisation Load\Merge Join.Inputs[Merge Join Right Input].Columns[Count all]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[OrganisationNumber]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[OrganisationNumber]"
+                      name="OrganisationNumber"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[OrganisationNumber]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[AddressLine1]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[AddressLine1]"
+                      name="AddressLine1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[AddressLine1]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[AddressLine2]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[AddressLine2]"
+                      name="AddressLine2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[AddressLine2]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[AddressLine3]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[AddressLine3]"
+                      name="AddressLine3">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[AddressLine3]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[AddressLine4]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[AddressLine4]"
+                      name="AddressLine4">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[AddressLine4]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[Town]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[Town]"
+                      name="Town">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[Town]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[DC_Postcode]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[DC_Postcode]"
+                      name="DC_Postcode">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[DC_Postcode]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[OrganisationName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[OrganisationName]"
+                      name="OrganisationName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input].Columns[OrganisationName]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Organisation Load\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Organisation]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Organisation Load\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.Vaultex_Org]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.Vaultex_Org]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[OrganisationName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="OrganisationName"
+                      externalMetadataColumnId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrganisationName]"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[OrganisationName]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[OrganisationNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="OrganisationNumber"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrganisationNumber]"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[OrganisationNumber]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[AddressLine1]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="AddressLine1"
+                      externalMetadataColumnId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AddressLine1]"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[AddressLine1]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[AddressLine2]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="AddressLine2"
+                      externalMetadataColumnId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AddressLine2]"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[AddressLine2]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[AddressLine3]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="AddressLine3"
+                      externalMetadataColumnId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AddressLine3]"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[AddressLine3]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[AddressLine4]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="AddressLine4"
+                      externalMetadataColumnId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AddressLine4]"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[AddressLine4]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Town]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Town"
+                      externalMetadataColumnId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Town]"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[Town]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DC_Postcode]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="DC_Postcode"
+                      externalMetadataColumnId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Postcode]"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[DC_Postcode]" />
+                    <inputColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Count all]"
+                      cachedDataType="ui8"
+                      cachedName="Count all"
+                      externalMetadataColumnId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TotalEmployee]"
+                      lineageId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output].Columns[Count all]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrgId]"
+                      dataType="i4"
+                      name="OrgId" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrganisationName]"
+                      dataType="wstr"
+                      length="255"
+                      name="OrganisationName" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrganisationNumber]"
+                      dataType="wstr"
+                      length="255"
+                      name="OrganisationNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AddressLine1]"
+                      dataType="wstr"
+                      length="255"
+                      name="AddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AddressLine2]"
+                      dataType="wstr"
+                      length="255"
+                      name="AddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AddressLine3]"
+                      dataType="wstr"
+                      length="255"
+                      name="AddressLine3" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AddressLine4]"
+                      dataType="wstr"
+                      length="255"
+                      name="AddressLine4" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Town]"
+                      dataType="wstr"
+                      length="255"
+                      name="Town" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Postcode]"
+                      dataType="wstr"
+                      length="20"
+                      name="Postcode" />
+                    <externalMetadataColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TotalEmployee]"
+                      dataType="i4"
+                      name="TotalEmployee" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Organisation Load\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Organisation Load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Organisation Load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Organisation Load\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Organisation Load\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Organisation Load\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Organisation Load\Sort.Inputs[Sort Input].Columns[OrganisationName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="OrganisationName"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[OrganisationName]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">2</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Organisation Load\Sort.Inputs[Sort Input].Columns[OrganisationNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="OrganisationNumber"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[OrganisationNumber]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Organisation Load\Sort.Inputs[Sort Input].Columns[AddressLine1]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="AddressLine1"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine1]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Organisation Load\Sort.Inputs[Sort Input].Columns[AddressLine2]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="AddressLine2"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine2]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Organisation Load\Sort.Inputs[Sort Input].Columns[AddressLine3]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="AddressLine3"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine3]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Organisation Load\Sort.Inputs[Sort Input].Columns[AddressLine4]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="AddressLine4"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine4]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Organisation Load\Sort.Inputs[Sort Input].Columns[Town]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Town"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[Town]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Organisation Load\Sort.Inputs[Sort Input].Columns[Postcode]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Postcode"
+                      lineageId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[Postcode]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Organisation Load\Sort.Inputs[Sort Input].Columns[DC_Postcode]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="DC_Postcode"
+                      lineageId="Package\Organisation Load\Data Conversion.Outputs[Data Conversion Output].Columns[DC_Postcode]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Organisation Load\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[OrganisationName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[OrganisationName]"
+                      name="OrganisationName"
+                      sortKeyPosition="2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[OrganisationName]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[OrganisationNumber]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[OrganisationNumber]"
+                      name="OrganisationNumber"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[OrganisationNumber]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[AddressLine1]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[AddressLine1]"
+                      name="AddressLine1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine1]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[AddressLine2]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[AddressLine2]"
+                      name="AddressLine2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine2]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[AddressLine3]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[AddressLine3]"
+                      name="AddressLine3">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine3]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[AddressLine4]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[AddressLine4]"
+                      name="AddressLine4">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[AddressLine4]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[Town]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[Town]"
+                      name="Town">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[Town]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[Postcode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[Postcode]"
+                      name="Postcode">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Organisation Load\Excel Source.Outputs[Excel Source Output].Columns[Postcode]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[DC_Postcode]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Organisation Load\Sort.Outputs[Sort Output].Columns[DC_Postcode]"
+                      name="DC_Postcode">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Organisation Load\Data Conversion.Outputs[Data Conversion Output].Columns[DC_Postcode]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Organisation Load\Sort 1"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 1"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Organisation Load\Sort 1.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Organisation Load\Sort 1.Inputs[Sort Input].Columns[Count all]"
+                      cachedDataType="ui8"
+                      cachedName="Count all"
+                      lineageId="Package\Organisation Load\Aggregate.Outputs[Aggregate Output 1].Columns[Count all]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">2</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Organisation Load\Sort 1.Inputs[Sort Input].Columns[OrganisationNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="OrganisationNumber"
+                      lineageId="Package\Organisation Load\Aggregate.Outputs[Aggregate Output 1].Columns[OrganisationNumber]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Organisation Load\Sort 1.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Organisation Load\Sort 1.Outputs[Sort Output].Columns[Count all]"
+                      dataType="ui8"
+                      lineageId="Package\Organisation Load\Sort 1.Outputs[Sort Output].Columns[Count all]"
+                      name="Count all"
+                      sortKeyPosition="2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Organisation Load\Aggregate.Outputs[Aggregate Output 1].Columns[Count all]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Organisation Load\Sort 1.Outputs[Sort Output].Columns[OrganisationNumber]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Organisation Load\Sort 1.Outputs[Sort Output].Columns[OrganisationNumber]"
+                      name="OrganisationNumber"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Organisation Load\Aggregate.Outputs[Aggregate Output 1].Columns[OrganisationNumber]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Organisation Load.Paths[Aggregate Output 1]"
+              endId="Package\Organisation Load\Sort 1.Inputs[Sort Input]"
+              name="Aggregate Output 1"
+              startId="Package\Organisation Load\Aggregate.Outputs[Aggregate Output 1]" />
+            <path
+              refId="Package\Organisation Load.Paths[Data Conversion Output]"
+              endId="Package\Organisation Load\Sort.Inputs[Sort Input]"
+              name="Data Conversion Output"
+              startId="Package\Organisation Load\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Organisation Load.Paths[Excel Source Output]"
+              endId="Package\Organisation Load\Data Conversion.Inputs[Data Conversion Input]"
+              name="Excel Source Output"
+              startId="Package\Organisation Load\Excel Source.Outputs[Excel Source Output]" />
+            <path
+              refId="Package\Organisation Load.Paths[Excel Source Output1]"
+              endId="Package\Organisation Load\Aggregate.Inputs[Aggregate Input 1]"
+              name="Excel Source Output"
+              startId="Package\Organisation Load\Excel Source 1.Outputs[Excel Source Output]" />
+            <path
+              refId="Package\Organisation Load.Paths[Merge Join Output]"
+              endId="Package\Organisation Load\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Merge Join Output"
+              startId="Package\Organisation Load\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\Organisation Load.Paths[Sort Output]"
+              endId="Package\Organisation Load\Merge Join.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\Organisation Load\Sort.Outputs[Sort Output]" />
+            <path
+              refId="Package\Organisation Load.Paths[Sort Output1]"
+              endId="Package\Organisation Load\Merge Join.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\Organisation Load\Sort 1.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{D10D1265-7417-45CB-9239-258F477BE41E}"
+      DTS:From="Package\Organisation Load"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Employee Load" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="163.2,41.6"
+          Id="Package\Organisation Load"
+          TopLeft="273.833322670725,85.233333966997" />
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\Employee Load"
+          TopLeft="264.999989469846,240.9333352481" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="355.433322670725,126.833333966997">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-15.2333332008787,114.100001281103"
+              Start="0,0"
+              End="-15.2333332008787,106.600001281103">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,53.0500006405513" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,53.0500006405513"
+                    Point2="0,57.0500006405513"
+                    Point3="-4,57.0500006405513" />
+                  <mssgle:LineSegment
+                    End="-11.2333332008787,57.0500006405513" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-11.2333332008787,57.0500006405513"
+                    Point2="-15.2333332008787,57.0500006405513"
+                    Point3="-15.2333332008787,61.0500006405513" />
+                  <mssgle:LineSegment
+                    End="-15.2333332008787,106.600001281103" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Organisation Load">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="140,41.6"
+          Id="Package\Organisation Load\Excel Source"
+          TopLeft="405,63" />
+        <NodeLayout
+          Size="156,41.6"
+          Id="Package\Organisation Load\Data Conversion"
+          TopLeft="415,161" />
+        <EdgeLayout
+          Id="Package\Organisation Load.Paths[Excel Source Output]"
+          TopLeft="475,104.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="18.0000000000001,56.4"
+              Start="0,0"
+              End="18.0000000000001,48.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.2" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.2"
+                    Point2="0,28.2"
+                    Point3="4,28.2" />
+                  <mssgle:LineSegment
+                    End="14.0000000000001,28.2" />
+                  <mssgle:CubicBezierSegment
+                    Point1="14.0000000000001,28.2"
+                    Point2="18.0000000000001,28.2"
+                    Point3="18.0000000000001,32.2" />
+                  <mssgle:LineSegment
+                    End="18.0000000000001,48.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Organisation Load\OLE DB Destination"
+          TopLeft="515,458.6" />
+        <NodeLayout
+          Size="148,41.6"
+          Id="Package\Organisation Load\Excel Source 1"
+          TopLeft="698,53" />
+        <NodeLayout
+          Size="126.4,41.6"
+          Id="Package\Organisation Load\Aggregate"
+          TopLeft="749,178" />
+        <EdgeLayout
+          Id="Package\Organisation Load.Paths[Excel Source Output1]"
+          TopLeft="772,94.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="40.1999999999999,83.4"
+              Start="0,0"
+              End="40.1999999999999,75.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.7" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,37.7"
+                    Point2="0,41.7"
+                    Point3="4,41.7" />
+                  <mssgle:LineSegment
+                    End="36.1999999999999,41.7" />
+                  <mssgle:CubicBezierSegment
+                    Point1="36.1999999999999,41.7"
+                    Point2="40.1999999999999,41.7"
+                    Point3="40.1999999999999,45.7" />
+                  <mssgle:LineSegment
+                    End="40.1999999999999,75.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="97.6,41.6"
+          Id="Package\Organisation Load\Sort"
+          TopLeft="461.5,253.62082537727" />
+        <NodeLayout
+          Size="106.4,41.6"
+          Id="Package\Organisation Load\Sort 1"
+          TopLeft="792,252.8" />
+        <EdgeLayout
+          Id="Package\Organisation Load.Paths[Data Conversion Output]"
+          TopLeft="493,202.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="17.3,51.0208253772702"
+              Start="0,0"
+              End="17.3,43.5208253772702">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.5104126886351" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.5104126886351"
+                    Point2="0,25.5104126886351"
+                    Point3="4,25.5104126886351" />
+                  <mssgle:LineSegment
+                    End="13.3,25.5104126886351" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13.3,25.5104126886351"
+                    Point2="17.3,25.5104126886351"
+                    Point3="17.3,29.5104126886351" />
+                  <mssgle:LineSegment
+                    End="17.3,43.5208253772702" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Organisation Load.Paths[Aggregate Output 1]"
+          TopLeft="812.2,219.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="33.0000000000005,33.2"
+              Start="0,0"
+              End="33.0000000000005,25.7">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.6" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.6"
+                    Point2="0,16.6"
+                    Point3="4,16.6" />
+                  <mssgle:LineSegment
+                    End="29.0000000000005,16.6" />
+                  <mssgle:CubicBezierSegment
+                    Point1="29.0000000000005,16.6"
+                    Point2="33.0000000000005,16.6"
+                    Point3="33.0000000000005,20.6" />
+                  <mssgle:LineSegment
+                    End="33.0000000000005,25.7" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\Organisation Load\Merge Join"
+          TopLeft="619,333.8" />
+        <EdgeLayout
+          Id="Package\Organisation Load.Paths[Sort Output]"
+          TopLeft="510.3,295.22082537727">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="173.5,38.5791746227298"
+              Start="0,0"
+              End="173.5,31.0791746227298">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.2895873113649" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.2895873113649"
+                    Point2="0,19.2895873113649"
+                    Point3="4,19.2895873113649" />
+                  <mssgle:LineSegment
+                    End="169.5,19.2895873113649" />
+                  <mssgle:CubicBezierSegment
+                    Point1="169.5,19.2895873113649"
+                    Point2="173.5,19.2895873113649"
+                    Point3="173.5,23.2895873113649" />
+                  <mssgle:LineSegment
+                    End="173.5,31.0791746227298" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Organisation Load.Paths[Sort Output1]"
+          TopLeft="845.2,294.4">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-141.133333333334,39.4"
+              Start="0,0"
+              End="-141.133333333334,31.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.3517073170732" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.3517073170732"
+                    Point2="0,23.3517073170732"
+                    Point3="-4,23.3517073170732" />
+                  <mssgle:LineSegment
+                    End="-137.133333333334,23.3517073170732" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-137.133333333334,23.3517073170732"
+                    Point2="-141.133333333334,23.3517073170732"
+                    Point3="-141.133333333334,27.3517073170732" />
+                  <mssgle:LineSegment
+                    End="-141.133333333334,31.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Organisation Load.Paths[Merge Join Output]"
+          TopLeft="683.8,375.4">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-83.1999999999999,83.2"
+              Start="0,0"
+              End="-83.1999999999999,75.7">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.6" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,37.6"
+                    Point2="0,41.6"
+                    Point3="-4,41.6" />
+                  <mssgle:LineSegment
+                    End="-79.1999999999999,41.6" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-79.1999999999999,41.6"
+                    Point2="-83.1999999999999,41.6"
+                    Point3="-83.1999999999999,45.6" />
+                  <mssgle:LineSegment
+                    End="-83.1999999999999,75.7" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Organisation Load\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Organisation Load\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Employee Load">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="140,41.6"
+          Id="Package\Employee Load\Excel Source"
+          TopLeft="190,80" />
+        <NodeLayout
+          Size="156,41.6"
+          Id="Package\Employee Load\Data Conversion"
+          TopLeft="193,176" />
+        <EdgeLayout
+          Id="Package\Employee Load.Paths[Excel Source Output]"
+          TopLeft="260,121.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="11,54.4"
+              Start="0,0"
+              End="11,46.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.2" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.2"
+                    Point2="0,27.2"
+                    Point3="4,27.2" />
+                  <mssgle:LineSegment
+                    End="7,27.2" />
+                  <mssgle:CubicBezierSegment
+                    Point1="7,27.2"
+                    Point2="11,27.2"
+                    Point3="11,31.2" />
+                  <mssgle:LineSegment
+                    End="11,46.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Employee Load\OLE DB Destination"
+          TopLeft="189,258" />
+        <EdgeLayout
+          Id="Package\Employee Load.Paths[Data Conversion Output]"
+          TopLeft="272.8,217.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.4"
+              Start="0,0"
+              End="0,32.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Employee Load\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Employee Load\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Organisation Load\Excel Source 1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
